@@ -1,17 +1,15 @@
 <template>
   <div id="app">
-    <Head />
+    <Head @toggle-cart-status="toggleCartStatus" @filter-goods="filterGoods" />
     <main>
       <GoodsList :goods="filteredGoods" />
       <br />
-      <Cart />
+      <Cart @is-visible-cart="isVisibleCart" />
     </main>
   </div>
 </template>
 
 <script>
-// 1. Вынести весь хэдер в компонент
-// 2. Вынести корзину в компонент
 import GoodsList from "./components/GoodsList";
 import Head from "./components/Head";
 import Cart from "./components/Cart";
@@ -28,7 +26,6 @@ export default {
   data: () => ({
     goods: [],
     filteredGoods: [],
-    searhLine: "",
     isVisibleCart: false,
   }),
   mounted() {
@@ -43,19 +40,14 @@ export default {
           this.filteredGoods = data;
         });
     },
-    filterGoods() {
-      const regexp = new RegExp(this.searhLine, "i");
+    filterGoods(value) {
+      const regexp = new RegExp(value, "i");
       this.filteredGoods = this.goods.filter((good) =>
         regexp.test(good.product_name)
       );
     },
     toggleCartStatus() {
       this.isVisibleCart = !this.isVisibleCart;
-    },
-  },
-  watch: {
-    searhLine() {
-      this.filterGoods();
     },
   },
 };

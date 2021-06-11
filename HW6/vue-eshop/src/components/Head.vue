@@ -1,39 +1,36 @@
 <template>
-  <div class="header">
-    <input v-model="searhLine" type="text" class="goods-search" />
-    <button class="search-button" type="button" @click="filterGoods">
-      Искать
-    </button>
-    <button class="cart-button" type="button" @click="toggleCartStatus">
+  <header>
+    <input v-model="searchValue" type="text" class="goods-search" />
+    <button class="search-button" type="button" @click="onClick">Искать</button>
+    <button class="cart-button" type="button" @click="toggleCart">
       Корзина
     </button>
-  </div>
+  </header>
 </template>
 
 <script>
 export default {
-  props: {
-    searhLine: {
-      type: String,
-      default: "",
+  data: () => ({
+    searchValue: "",
+  }),
+  methods: {
+    onClick() {
+      this.$emit("filter-goods", this.searchValue);
     },
-    isVisibleCart: {
-      type: Boolean,
-      default: false,
-    },
-    filterGoods: {
-      type: Function,
-    },
-    toggleCartStatus: {
-      type: Function,
+    toggleCart() {
+      this.$emit("toogleCartStatus");
     },
   },
-  methods: {},
+  watch: {
+    searchValue() {
+      this.onClick();
+    },
+  },
 };
 </script>
 
 <style scoped>
-.header {
+header {
   padding: 10px;
   display: flex;
   justify-content: space-between;

@@ -5,7 +5,14 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: {
+    isVisibleCart: {
+      type: Boolean,
+      default: false,
+    },
+  },
+};
 </script>
 <style scoped>
 .cart-list {
